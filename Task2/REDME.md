@@ -104,6 +104,11 @@ Save the file.
 ### 7. Access the Battleships Game
 Open your browser and navigate to [http://bootcamp.neshan.ir:4444) to access the Battleships game.
 
+![alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task2/scren.png)
+
+
+
+
 
 - To stop and remove the containers, networks, and volumes defined in the `docker-compose.yml` file, run:
 ```
