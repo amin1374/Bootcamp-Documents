@@ -170,7 +170,7 @@ kubectl exec -it postgresdb-5b9bf77c46-6xhx2 -- psql -h localhost -U testUser --
 ### Phase 2
 
 ## Change the script and convert to Docker image
-
+Considering that the database information is stored in the cluster as a configmap.
 ```
 #!/bin/bash
 
@@ -210,4 +210,47 @@ do
     # Sleep for 10 seconds before the next iteration
     sleep 10
 done
+```
+## Dokcerfile
+```
+# Use a base image with the necessary dependencies
+FROM ubuntu:latest
+
+# Install required packages
+RUN apt-get update && apt-get install -y mtr postgresql-client
+
+# Copy the script to the container
+COPY script.sh /app/
+
+# Set the working directory
+WORKDIR /app
+
+# Make the script executable
+RUN chmod +x script.sh
+
+# Set environment variables for database connection
+ENV DB_HOST=""
+ENV DB_PORT=""
+ENV DB_NAME=""
+ENV DB_USER=""
+ENV DB_PASSWORD=""
+
+# Run the script when the container starts
+CMD ["./script.sh"]
+```
+now run this command:
+```
+docker build -t amin1374/script:v1 .
+```
+After the project image is created, we will upload it to Docker Hub.
+```
+docker push amin1374/script:v1
+```
+Now we will make the corresponding Docker image private.
+To use a private image in Kubernetes, we need an account service.
+
+In K8s To create the DockerHub secret, use the following command:
+
+```
+kubectl create secret docker-registry dockerhub-secret --docker-server=https://index.docker.io/v1/ --docker-username=xxxxx --docker-password=xxxxxx --docker-email=xxxx@gmail.com
 ```
