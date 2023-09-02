@@ -315,4 +315,6 @@ spec:
                 name: db-config
 
 ```
-https://github.com/amin1374/NeshanDocuments/blob/master/Task5/result-sc.png
+
+![alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task5/result-sc.png)
+
