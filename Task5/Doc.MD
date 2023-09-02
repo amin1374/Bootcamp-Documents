@@ -315,5 +315,4 @@ spec:
                 name: db-config
 
 ```
-Task5/Screenshot from 2023-09-02 19-22-27.png
-
+https://github.com/amin1374/NeshanDocuments/blob/master/Task5/result-sc.png
