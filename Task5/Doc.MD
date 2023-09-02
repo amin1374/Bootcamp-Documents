@@ -162,3 +162,7 @@ Finaly run the service to expose the cluster
 kubectl apply -f db-service.yaml
 ```
 
+## To check the database deployment, run the following command:
+```
+kubectl exec -it postgresdb-5b9bf77c46-6xhx2 -- psql -h localhost -U testUser --password -p 5432 testDB
+```
