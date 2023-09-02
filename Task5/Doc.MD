@@ -254,3 +254,18 @@ In K8s To create the DockerHub secret, use the following command:
 ```
 kubectl create secret docker-registry dockerhub-secret --docker-server=https://index.docker.io/v1/ --docker-username=xxxxx --docker-password=xxxxxx --docker-email=xxxx@gmail.com
 ```
+
+Considering that the image repository is private and requires a user and password to access it, we need a service account to deploy the script and receive the corresponding image.now create service-account.yaml
+
+```
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: my-service-account
+imagePullSecrets:
+  - name: dockerhub-secret
+```
+to apply this file
+```
+kubectl apply -f service-account.yaml
+```
