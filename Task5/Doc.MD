@@ -269,3 +269,50 @@ to apply this file
 ```
 kubectl apply -f service-account.yaml
 ```
+Now, before running the main image, we need to create the configmap related to the database information
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+data:
+  DB_HOST: "10.109.223.18"
+  DB_PORT: "5432"
+  DB_NAME: "testDB"
+  DB_USER: "testUser"
+  DB_PASSWORD: "testPassword"
+```
+Note: DB Host is the address of the database service.
+```
+kubectl apply -f db-config.yaml 
+```
+Now Deploy script-deployment.yaml
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: script
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: script
+  template:
+    metadata:
+      labels:
+        app: script
+    spec:
+      serviceAccountName: my-service-account
+      containers:
+        - name: script
+          image: amin1374/script:v1
+          ports:
+            - containerPort: 6767
+          envFrom:
+            - configMapRef:
+                name: db-config
+
+```
+
