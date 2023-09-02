@@ -120,4 +120,20 @@ spec:
             # reference the PersistentVolumeClaim
             claimName: db-persistent-volume-claim
 ```
+## Creating the Service Resource
+A service exposes a deployment. It provides a stable network endpoint for accessing a cluster. To create a service resource, add a db-service.yaml file and include the following:
 
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresdb
+spec:
+  type: ClusterIP
+  selector:
+    app: postgresdb
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+```
