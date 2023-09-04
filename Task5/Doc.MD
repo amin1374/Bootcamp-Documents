@@ -24,6 +24,20 @@ spec:
   # Specify the path to persistent the volumes  
   hostPath:
     path: "/data/db"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: name
+          operator: In
+          values:
+          - worker-1
+
+```
+add label to worker nodes
+
+```
+kubectl label nodes worker name=worker-1
 ```
 
 To allow a cluster to request access to the data storage, you need to set up a PersistentVolumeClaim (PVC) to the corresponding Persistent Volume. PVC is bound to a PV. It ensures the pods created within the designated cluster can access a volume to store data.
@@ -47,6 +61,7 @@ spec:
       # the PVC storage
       storage: 8Gi
 ```
+
 ## Creating Database Secrets
 Databases require access control using passwords and users. You can use Kubernetes to create these credentials. To do this, use ConfigMap to create environment variables to store the database configurations.
 
@@ -77,49 +92,69 @@ Additionally, it also allows you to add volumes to the pods on the cluster. In t
 Create a db-deployment.yaml and build a PostgreSQL deployment manifest as follows:
 
 ```
-# Kubernetes API version
 apiVersion: apps/v1
-# Deployment object
 kind: Deployment
 metadata:
-  # The name of the Deployment
   name: postgresdb
 spec:
-  # Replicas for this Deployment
-  replicas: 3
+  replicas: 1
   selector:
-    # labels the pods
     matchLabels:
       app: postgresdb
   template:
     metadata:
       labels:
-        # The label the pods created from the pod template should have
         app: postgresdb
     spec:
       containers:
-        # The container name to execute pods
         - name: postgresdb
-          # pull postgresimage from docker hub
           image: postgres
           ports:
-            # Assign ports to expose container
             - containerPort: 5432
           envFrom:
-            # Load the environment variables/PostgresSQL credentials
             - configMapRef:
-                # This should be the ConfigMap name created ealier
                 name: db-secret-credentials
           volumeMounts:
-            # The volume mounts  for the container
             - mountPath: /var/lib/postgres/data
               name: db-data
-      # Volumes attached to the pod
+          # Add liveness probe
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pg_isready -U postgres
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          # Add readiness probe
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - pg_isready -U postgres
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 512Mi
+            limits:
+              cpu: 1
+              memory: 1Gi
       volumes:
         - name: db-data
           persistentVolumeClaim:
-            # reference the PersistentVolumeClaim
             claimName: db-persistent-volume-claim
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: name
+                operator: In
+                values:
+                - worker-1
 ```
 ## Creating the Service Resource
 A service exposes a deployment. It provides a stable network endpoint for accessing a cluster. To create a service resource, add a db-service.yaml file and include the following:
