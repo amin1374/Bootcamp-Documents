@@ -156,6 +156,24 @@ spec:
                 values:
                 - worker-1
 ```
+| Field | Description |
+|---|---|
+| Name | The name of the deployment (`postgresdb`). |
+| Replicas | The number of replicas to create (`1`). |
+| Selector | The selector that the Pods in the deployment must match (`app=postgresdb`). |
+| Template | The template for the Pods in the deployment. |
+| Labels | The labels that the Pods in the deployment must have (`app=postgresdb`). |
+| Container | The container to run in each Pod (`postgres`). |
+| Ports | The ports that the container exposes (`5432`). |
+| Environment variables | The environment variables that the container exposes (`db-secret-credentials`). |
+| Volume mounts | The volume mounts that the container uses (`db-data`). |
+| Liveness and readiness probes | The liveness and readiness probes that the container uses to check its health (`pg_isready`). |
+| Resources | The resources that the container requests and limits (`cpu`, `memory`). |
+| Volume | The volume that the Pods in the deployment use (`db-data`). The volume is a PersistentVolumeClaim that refers to the `db-persistent-volume-claim` PersistentVolume. |
+| Node affinity | The node affinity that the Pods in the deployment must match (`requiredDuringSchedulingIgnoredDuringExecution`). The node affinity specifies that the Pods must be scheduled on a node that has the label `name=worker-1`. |
+
+
+
 ## Creating the Service Resource
 A service exposes a deployment. It provides a stable network endpoint for accessing a cluster. To create a service resource, add a db-service.yaml file and include the following:
 
