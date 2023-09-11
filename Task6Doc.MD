@@ -148,4 +148,15 @@ This Dockerfile defines the steps to build a Docker image that includes the nece
 
 This Dockerfile can be used to build a Docker image that includes the necessary dependencies and runs the provided scripts.
 
+## Additional information for the docker file
+```
+ docker build -t your-docker-username/image-name:tag .
+```
+to push image on dockerhub
+```
+ docker push your-docker-username/image-name:tag
+```
+```
+ docker run -p 7000:7000 your-docker-username/image-name:tag
+```
 
