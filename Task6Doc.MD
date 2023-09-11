@@ -95,4 +95,57 @@ This script is used to update Prometheus metrics based on JSON data.
    - If the JSON data is not a list, the `update_metrics` function is called once.
    - After updating the metrics, the script sleeps for 10 seconds using `time.sleep`.
 
+To run the script in the Kubernetes cluster, we need it to create its Dockerfile.
+
+```
+# Use a base image with the necessary dependencies
+FROM ubuntu:latest
+
+# Install required packages
+RUN apt-get update && apt-get install -y mtr
+
+# Install Python and necessary packages
+RUN apt-get install -y python3 python3-pip
+RUN pip3 install prometheus_client
+
+
+# Copy the script files to the container
+COPY script.sh /app/script.sh
+COPY script.py /app/script.py
+COPY output.json /app/output.json
+
+# Set the working directory
+WORKDIR /app
+
+# Make the script.sh executable
+RUN chmod +x script.sh
+
+# Expose port 7000 for Prometheus metrics
+EXPOSE 7000
+
+# Wait for 10 seconds and then execute the scripts
+CMD sleep 10 && ./script.sh & python3 script.py
+```
+This Dockerfile defines the steps to build a Docker image that includes the necessary dependencies and runs two scripts, `script.sh` and `script.py`. Here's an explanation of the Dockerfile:
+
+1. Use the latest Ubuntu image as the base image.
+
+2. Update the package lists and install the `mtr` package using `apt-get`.
+
+3. Install Python 3 and pip3 using `apt-get`.
+
+4. Install the `prometheus_client` package using `pip3`.
+
+5. Copy the `script.sh`, `script.py`, and `output.json` files from the local machine to the `/app` directory in the container.
+
+6. Set the working directory to `/app`.
+
+7. Make the `script.sh` file executable using `chmod +x`.
+
+8. Expose port 7000 to allow access to the Prometheus metrics.
+
+9. Use the `CMD` instruction to specify the command to run when the container starts. In this case, it waits for 10 seconds using `sleep` and then runs `script.sh` in the background (`&`) and `script.py` using `python3`.
+
+This Dockerfile can be used to build a Docker image that includes the necessary dependencies and runs the provided scripts.
+
 
