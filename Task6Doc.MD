@@ -159,4 +159,39 @@ to push image on dockerhub
 ```
  docker run -p 7000:7000 your-docker-username/image-name:tag
 ```
+## Kubernetes section
 
+Now, to run the script and its metrics in the Kubernetes cluster, we must create and run the following files in order.
+To Create Pods : script-exporter-deployment.yaml
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: script-exporter-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: script-exporter
+  template:
+    metadata:
+      labels:
+        app: script-exporter
+    spec:
+      containers:
+        - name: script-container
+          image: amin1374/scexporter:v2
+          ports:
+            - containerPort: 7000
+          readinessProbe:
+            tcpSocket:
+              port: 7000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 7000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+```
