@@ -194,6 +194,9 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 15
 ```
+```
+kubectl apply -f script-exporter-deployment.yaml
+```
 Now we run the service so that the pod is available from outside the cluster.
  ` script-exporter-service.yaml`
 ```
@@ -212,4 +215,7 @@ spec:
       port: 7000
       targetPort: 7000
       nodePort: 30003
+```
+```
+kubectl apply -f script-exporter-service.yaml
 ```
