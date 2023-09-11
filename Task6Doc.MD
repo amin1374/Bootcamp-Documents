@@ -161,7 +161,7 @@ to push image on dockerhub
 ## Kubernetes section
 
 Now, to run the script and its metrics in the Kubernetes cluster, we must create and run the following files in order.
-To Create Pods : script-exporter-deployment.yaml
+To Create Pods : `script-exporter-deployment.yaml`
 
 ```
 apiVersion: apps/v1
@@ -193,4 +193,23 @@ spec:
               port: 7000
             initialDelaySeconds: 10
             periodSeconds: 15
+```
+Now we run the service so that the pod is available from outside the cluster.
+ ` script-exporter-service.yaml`
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: script-exporter-service
+  labels:
+    app: script-exporter
+spec:
+  type: NodePort
+  selector:
+    app: script-exporter
+  ports:
+    - protocol: TCP
+      port: 7000
+      targetPort: 7000
+      nodePort: 30003
 ```
