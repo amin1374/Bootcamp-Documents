@@ -1,6 +1,5 @@
 
-## descirption
-### we need write prometheus exporter for this script.
+## Prometheus Bash Script Exporter 
 
 This script uses the mtr command to monitor the latency, packet loss, jitter, and received packets of a list of domains. The script runs in an infinite loop, continuously monitoring the domains. The output of the script is a JSON object that is saved to a file called output.json.
 ```
