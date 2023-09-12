@@ -312,7 +312,7 @@ domain_jitter{domain="kavenegar.com"} 0.72
 domain_received_info{domain="kavenegar.com",received="kavenegar.com"} 1.0
 ```
 ## Grafana Dashboard
-
+![alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task1/Headless-targets.png)
 
 ## Headless Service
 To create a headless service, we need to make changes in the service file. Here, because we wanted to have a new pod for this service separately in addition to the previous pods, we repeat the steps again.
@@ -398,6 +398,7 @@ spec:
 ```
 kubectl apply -f newexpo-servicemonitor.yaml
 ```
+![alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task1/Headless-targets.png)
 ## Kubernetes Endpoint
 In order to be able to add a service outside the Kubernetes cluster to Prometheus inside the cluster, we need to create the following services.
 
@@ -458,3 +459,4 @@ spec:
 ```
 kubectl apply -f svc-monitor.yaml
 ```
+![alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task1/Endpoint-Target.png)
