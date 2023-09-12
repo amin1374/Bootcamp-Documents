@@ -247,6 +247,9 @@ spec:
 ```
 kubectl apply -f script-service-monitor.yaml
 ```
+## Prometheus service descovery
+
+
 Sample Exporter data:
 
 ```
@@ -309,3 +312,90 @@ domain_jitter{domain="kavenegar.com"} 0.72
 domain_received_info{domain="kavenegar.com",received="kavenegar.com"} 1.0
 ```
 ## Grafana Dashboard
+
+
+## Headless Service
+To create a headless service, we need to make changes in the service file. Here, because we wanted to have a new pod for this service separately in addition to the previous pods, we repeat the steps again.
+`newexpo-deployment.yaml`
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newexpo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: newexpo
+  template:
+    metadata:
+      labels:
+        app: newexpo
+    spec:
+      containers:
+        - name: newexpo
+          image: amin1374/scexporter:v2
+          ports:
+            - containerPort: 7000
+          readinessProbe:
+            tcpSocket:
+              port: 7000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 7000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+
+```
+```
+kubectl apply -f newexpo-deployment.yaml
+```
+service file
+`newexpo-service.yaml`
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: newexpo
+  labels:
+    app: newexpo
+spec:
+  clusterIP: None
+  selector:
+    app: newexpo
+  ports:
+    - protocol: TCP
+      port: 7000
+      targetPort: 7000
+````
+```
+kubectl apply -f newexpo-service.yaml
+```
+To use the Prometheus discovery service, we need to create a monitor service file
+`newexpo-servicemonitor.yaml`
+```
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: newexpo
+  namespace: default
+  labels:
+    release: mon
+spec:
+  selector:
+    matchLabels:
+      app: newexpo
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
+  namespaceSelector:
+    matchNames:
+      - default
+```
+```
+kubectl apply -f newexpo-servicemonitor.yaml
+```
+
