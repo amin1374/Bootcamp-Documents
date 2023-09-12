@@ -398,4 +398,63 @@ spec:
 ```
 kubectl apply -f newexpo-servicemonitor.yaml
 ```
+## Kubernetes Endpoint
+In order to be able to add a service outside the Kubernetes cluster to Prometheus inside the cluster, we need to create the following services.
 
+In this example, we want to add Grafana metrics that are on a server outside the cluster network to Prometheus inside the cluster.
+`service-ex.yaml``
+```
+kind: Service
+apiVersion: v1
+metadata:
+ name: grafana-exporter-external
+ labels:
+    app: grafana-exporter-external
+spec:
+ type: ClusterIP
+ ports:
+ - name: metrics
+   port: 3000
+   targetPort: 3000
+```
+```
+kubectl apply -f service-ex.yaml
+```
+`end-svc-ex.yaml`
+```
+kind: Endpoints
+apiVersion: v1
+metadata:
+ name: grafana-exporter-external
+subsets:
+- addresses:
+  - ip: 129.151.223.94
+  ports:
+  - name: metrics
+    port: 3000
+    protocol: TCP
+```
+```
+kubectl apply -f end-svc-ex.yaml
+```
+To Use Service Dicovery
+`svc-monitor.yaml`
+```
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: grafana-exporter-external
+  namespace: default
+  labels:
+    release: mon
+spec:
+  endpoints:
+  - interval: 30s
+    port: metrics
+  selector:
+    matchLabels:
+      app: grafana-exporter-external
+```
+```
+kubectl apply -f svc-monitor.yaml
+```
