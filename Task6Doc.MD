@@ -219,3 +219,93 @@ spec:
 ```
 kubectl apply -f script-exporter-service.yaml
 ```
+To Use Prometheus Service Descovery we need create servicemonitor.yaml
+`script-service-monitor.yaml`
+```
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: script-exporter-service-monitor
+  namespace: default
+  labels:
+    release: mon
+spec:
+  selector:
+    matchExpressions:
+      - key: app
+        operator: Regex
+        values:
+          - "^script-exporter.*$"
+  endpoints:
+    - port: metrics
+      interval: 30s
+      path: /metrics
+  namespaceSelector:
+    matchNames:
+      - default
+```
+```
+kubectl apply -f script-service-monitor.yaml
+```
+Sample Exporter data:
+
+```
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 202.0
+python_gc_objects_collected_total{generation="1"} 173.0
+python_gc_objects_collected_total{generation="2"} 0.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 42.0
+python_gc_collections_total{generation="1"} 3.0
+python_gc_collections_total{generation="2"} 0.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="10",patchlevel="12",version="3.10.12"} 1.0
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2.54500864e+08
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 2.2351872e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.69450253552e+09
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 2.1
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 6.0
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1.048576e+06
+# HELP domain_rtt Round-trip time for the domain
+# TYPE domain_rtt gauge
+domain_rtt{domain="zoomit.ir"} 3.0
+domain_rtt{domain="google.com"} 27.31
+domain_rtt{domain="arvancloud.ir"} 3.2
+domain_rtt{domain="kavenegar.com"} 3.93
+# HELP domain_packet_loss Packet loss for the domain
+# TYPE domain_packet_loss gauge
+domain_packet_loss{domain="zoomit.ir"} 0.0
+domain_packet_loss{domain="google.com"} 0.0
+domain_packet_loss{domain="arvancloud.ir"} 0.0
+domain_packet_loss{domain="kavenegar.com"} 0.0
+# HELP domain_jitter Jitter for the domain
+# TYPE domain_jitter gauge
+domain_jitter{domain="zoomit.ir"} 0.18
+domain_jitter{domain="google.com"} 0.82
+domain_jitter{domain="arvancloud.ir"} 0.05
+domain_jitter{domain="kavenegar.com"} 0.72
+# HELP domain_received_info Received value for the domain
+# TYPE domain_received_info gauge
+domain_received_info{domain="kavenegar.com",received="kavenegar.com"} 1.0
+```
+in final we need create Grafana Dashboard
