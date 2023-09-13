@@ -38,7 +38,7 @@ sudo apt-get -y install containerd
 ```
 The challenge I encountered, according to the explanations given in the links below, is that the installed package is incompatible with version 22.04 and requires some changes in its configuration file, which was installed and launched during the tests carried out, but did not have the necessary stability. Some pods on it were restarted intermittently, so I tested another method to solve this problem
 
-![Alt text](image.png)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/image.png)
 
 ```
 https://github.com/kubernetes/kubernetes/issues/110177#issuecomment-1161647736
@@ -203,10 +203,10 @@ Now we go to network installation and install calico according to the mentioned 
 ```
 https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart#install-calico
 ```
-![Alt text](image-2.png)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/image-2.png)
 
 Finally, all pods should be in the following state.
-![Alt text](image-3.png)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/image-3.png)
 
 After installing and setting up the master network and also installing the mentioned packages, the cluster is ready, it is enough to join the Worker node to the Master, and the corresponding command must be executed in the Worker node.
 
