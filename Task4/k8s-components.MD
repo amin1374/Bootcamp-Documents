@@ -18,7 +18,7 @@ b) kube-proxy: kube-proxy is responsible for network proxying and load balancing
 
 c) Container Runtime: The container runtime, such as Docker or containerd, is responsible for pulling and running container images. It provides an environment where containers can run securely and efficiently.
 
-![Alt text](k8s-1.jpg)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/k8s-1.jpg)
 
 ## 3. Add-Ons:
 Add-ons are optional components that enhance the functionality of Kubernetes. Some commonly used add-ons are:
@@ -34,7 +34,7 @@ Persistent Volumes (PVs) are a way to provide durable storage for containers. Th
 
 ## CoreDNS
 In Kubernetes, reliable and efficient service discovery is crucial for seamless communication between pods and services. CoreDNS, a flexible, extensible, and lightweight DNS server, has become the default DNS solution in Kubernetes. It simplifies the process of service discovery within the cluster, enabling pods and services to communicate with each other using user-friendly names. In this article, we will explore CoreDNS in Kubernetes, its features, benefits, and how it enhances the networking capabilities of the platform.
-![Alt text](k8s-2.jpg)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/k8s-2.jpg)
 
 1. What is CoreDNS?
 CoreDNS is a cloud-native, open-source DNS server that provides service discovery and DNS-based load balancing for Kubernetes clusters. It is designed to be highly scalable, performant, and modular, making it an ideal choice for managing DNS within Kubernetes environments.
@@ -272,10 +272,10 @@ etcd is used by Kubernetes to store a variety of data, including:
 
 ## Deployment Methods for etcd in Kubernetes Clusters
 Etcd is implementation is architected in such a way to enable high availability in Kubernetes. Etcd can be deployed as pods in master nodes
-![Alt text](etcd-1.jpg)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/etcd-1.jpg)
 
 It can also be deployed externally to enable resiliency and security
-![Alt text](etcd-2.jpg)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/etcd-2.jpg)
 
 | Feature | etcd | External etcd |
 |---|---|---|
