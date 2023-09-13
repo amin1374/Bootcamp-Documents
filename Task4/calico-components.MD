@@ -17,7 +17,7 @@ These are just the key Calico components. There are a number of other components
 
 The Calico components work together to provide a high-performance, scalable, and secure networking solution for containerized applications. By understanding the different components and how they work, you can better understand how Calico works and how to use it to secure your containerized applications.
 
-![Alt text](calico.jpg)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task4/pictures/calico.jpg)
 
 ## Encapsulation
 Calico supports the following types of encapsulation:
