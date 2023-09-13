@@ -4,7 +4,7 @@ Containerization of services has greatly helped to launch platforms and software
 
 In microservice architecture, various and advanced tools appeared to deploy software and services. Facilities emerged that led all developers to tools such as Docker and Kubernetes for the stability of their software. One of the most important advantages of using such tools is the stability of services and software, and by creating transparency, both from the developer's point of view and from the user's point of view, the trust and desire of users to use the software has also increased. With the increase of containers, tools called orchestrator were created to manage and add new features. In fact, orchestrators are advanced tools that were created to create clustering in container management.
 
-![Alt text]([image.png](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image.png)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image.png)
 The most important tools available in this field
 
 ## 1-Kubernetes
@@ -14,10 +14,10 @@ Kubernetes, often referred to as K8s, provides an environment for containerized 
 This robust and sophisticated suite is designed to automate many steps in the application lifecycle and, like a game of Tetris, selects containers for an assembly with optimal computing resources until the workload is finished. Other functions such as automatic repair and restart of containers in case of failure are among the tasks of this platform.
 
 The main goal of this tool is to simplify the work of the technical team, because many tasks related to the deployment of applications, which were previously done manually, are done automatically with Kubernetes.
-![Alt text](image-1.png)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image2.jpg)
  ### Kubernetes architecture
 
- ![Alt text](image.png)
+ ![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image3.jpg)
 
 
 
@@ -26,7 +26,7 @@ Redhat company has also provided a solution called OpenShift. Its Enterprise ver
 
 Some capabilities in Kubernetes are presented in a different way in Openshift, for example, in Kubernetes Helm Charts is used to install packages, or Ingress is used in network settings for the service cart, which is a kind of reverse proxy based on nginx, but in Openshift Templates are used as packages, or Route is used for the service network, which is based on F5-Big IP.
 
- ![Alt text](image.png)
+ ![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image4.jpg)
 
  OpenShift, developed by Red Hat, is written in Go and AngularJS languages. It supports Java, Go, Node.js, Python, PHP, and Ruby, but can be extended to support other programming languages. OpenShift easily integrates with other DevOps tools and is Open Container Initiative (OCI) compliant for container and runtime hosting. It can use Docker containers, and since it's based on Kubernetes, it will be familiar to developers coming from those platforms.
 
@@ -87,13 +87,13 @@ The primary uses for the Nomad are;
 3- Automatic service network with console.
 
 
- ![Alt text](image.png)
+ ![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image5.jpg)
 
 The main difference between Nomad and Kubernetes is that Nomad is more versatile and lightweight. Nomad can work just as a simple task scheduler or take on heavier orchestration roles depending on the project's specifications.
 
 Kubernetes comes as a full-featured platform with all its components. Nomad leaves out many components that can be added later if necessary, minimizing the need for external dependencies.
 
- ![Alt text](image.png)
+ ![Alt text]([image.png](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image6.jpg))
 
 `Installation`
 
@@ -161,11 +161,12 @@ Integration of Swarm cluster management with Docker Engine: Creating and managin
 
 `High security`: By default, each node uses TLS authentication and encryption to provide maximum security for all communications between itself and other nodes.
 The ability to update in the order of containers or Rolling updates: Dockerswarm allows us to update the containers of a service with a distance from each other, and this time delay between the update of one container and the update of the next container can also be set. As a result, we can apply various changes to our service without the need for down-time. Also, if there is a problem in applying the new changes, it is possible to go back to the previous version (roll back).
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image7.jpg)
 
 
 ## Key concepts `(Nodes)`
 
-![Alt text](image.png)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image8.jpg)
 
 A node means an instance of Docker engine present in the swarm cluster. For example, when we install Docker on a computer and put it in swarm mode, this computer will be a node of our swarm cluster. You can have one or more nodes on a physical server, but in the production environment, the nodes of my cluster are usually located on different physical servers.
 
@@ -174,7 +175,7 @@ The cluster manager nodes are also responsible for orchestrating and managing th
 
 On the other hand, the worker nodes receive and execute the tasks that the manager nodes send to them. By default, manager nodes also act as workers; It means that the services are also run on them. But the cluster can be configured in such a way that the manager nodes are only responsible for managing the cluster and are so-called manager-only. An agent is located on each worker node, which continuously informs the node manager about the status of the tasks assigned to that node, and thus the manager can manage and maintain the state of each worker.
 
-### `ervices and tasks`
+### `Services and tasks`
 
 Service is the definition of work and tasks that must be executed on manager or worker nodes and is actually the main place of user interaction with Swarm cluster. When creating a new service, the user specifies which image to use and which commands to execute inside the created containers.
 
@@ -183,14 +184,14 @@ For global services, Swarm executes a service task on all cluster nodes.
 
 A task consists of a Docker container and commands that must be executed inside that container. task is the smallest scheduling atomic unit in Swarm. Manager nodes assign tasks to worker nodes depending on the number of replicas. The moment a task is assigned to a node, it cannot be transferred to another node; Either it runs on the node or it fails.
 
-### `load balancing`
+### `Load Balancing`
 
 Swarm uses ingress load balancing to make available the services that we want to be seen from outside the Swarm cluster. For this purpose, it is possible that the Swaram manager automatically assigns a PublishedPort in the range of 30000-32767 to our desired service, and it is also possible to assign a specific port to it.
 
 With such a mechanism, our service is easily available through the specified port (PublishedPort) on each node of the swarm cluster; Even if there is no container of that service on that node. In fact, all cluster nodes have the ability to route incoming traffic to an instance of our service.
 
 In swarm mode, a DNS is automatically assigned to each service, and based on the DNS name of each service, the swarm manager distributes requests within the cluster between different services, which is actually an internal load balancing for the cluster.
-
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image9.jpg)
 
 
 ## 5-Rancher
@@ -206,7 +207,7 @@ Rancher provides the following functions.
    6. Supports management for Amazon EKS clusters & Google Kubernetes Engine (GKE)
    7. Global Application Catalog to make application installation and upgrade easier.
 
-![Alt text](image.png)
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image10.jpg)
 
 ## 6-Mesos
 Mesos is another cluster management tool that can handle container orchestration very efficiently. Created by Twitter for its own infrastructure and then open sourced. It is used by companies like eBay, Airbnb, etc. Mesos is not a dedicated tool for containers.
@@ -214,8 +215,7 @@ Mesos is another cluster management tool that can handle container orchestration
 Mesos is not a dedicated tool for containers. Instead, you can use it to cluster VMs or physical machines to run workloads (big data, etc.) other than containers.
 You can also run a Kubernetes cluster on top of a Mesos cluster.
 
-![Alt text](image.png)
-
+![Alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task3/pictures/image11.jpg)
 
 
 `Refrences`
