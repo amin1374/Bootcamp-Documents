@@ -42,6 +42,19 @@ kubectl label nodes worker name=worker-1
 
 To allow a cluster to request access to the data storage, you need to set up a PersistentVolumeClaim (PVC) to the corresponding Persistent Volume. PVC is bound to a PV. It ensures the pods created within the designated cluster can access a volume to store data.
 
+| Field | Description |
+|---|---|
+| apiVersion | The API version for the PersistentVolume object. |
+| kind | The kind of Kubernetes object. In this case, it is a PersistentVolume. |
+| metadata | The metadata for the PersistentVolume object. This includes the name, labels, and annotations. |
+| spec | The spec for the PersistentVolume object. This includes the storage class, capacity, access modes, hostPath, and nodeAffinity. |
+| storageClassName | The name of the storage class to use for this PersistentVolume. |
+| capacity | The capacity of the PersistentVolume in gigabytes (Gi). |
+| accessModes | The access modes for the PersistentVolume. In this case, it is ReadWriteMany, which means that multiple pods can read and write to the volume. |
+| hostPath | The path on the host machine where the PersistentVolume is stored. |
+| nodeAffinity | The node affinity for the PersistentVolume. This specifies the nodes that the PersistentVolume can be scheduled on. In this case, the PersistentVolume can only be scheduled on the node named `worker-1`. |
+
+
 To create PVC, add a new file and name it db-volume-claim.yaml. In this file create PVC as follows:
 ```
 apiVersion: v1
@@ -368,6 +381,10 @@ spec:
                 name: db-config
 
 ```
+```
+kubectl apply -f script-deployment.yaml
+```
+
 
 ![alt text](https://github.com/amin1374/NeshanDocuments/blob/master/Task5/result-sc.png)
 

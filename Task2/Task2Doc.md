@@ -41,6 +41,22 @@ Optional: build a Docker image by running the following command:
 ```
 docker build -t battleships .
 ```
+To run without Docker Compose, we use the following command
+```
+sudo docker run -d -p 3000:3000 amin1374/battelpro
+```
+The Dockerfile you provided is a basic Dockerfile for a Node.js application. It does the following:
+
+* **FROM node:14** - This line tells Docker to use the official Node.js image as the base image for the new image.
+* **WORKDIR /app** - This line creates a directory called `/app` inside the container and sets it as the working directory.
+* **COPY package*.json ./** - This line copies the `package.json` and `package-lock.json` files from the host machine to the `/app` directory in the container. These files are used to install the application's dependencies.
+* **RUN npm install** - This line runs the `npm install` command in the container to install the application's dependencies.
+* **COPY . .** - This line copies the entire contents of the current directory on the host machine to the `/app` directory in the container. This includes the application's source code and any other files.
+* **EXPOSE 3000** - This line tells Docker to expose port 3000 on the container. This is the port that the application will listen on.
+* **RUN groupadd -r myuser && useradd -r -g myuser myuser** - This line creates a new user called `myuser` and adds it to the `myuser` group. This is useful for security purposes, as it prevents the application from running as root.
+* **USER myuser** - This line tells Docker to run the application as the `myuser` user.
+* **CMD [ "node", "server.js" ]** - This line defines the command that will be run when the container starts. In this case, the application's `server.js` file will be executed.
+
 ### 3. Create a Reverse Proxy Configuration
 Create a `nginx.conf` file in the root directory with the following content:
 ```
