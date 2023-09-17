@@ -98,4 +98,4 @@ To check the expiration date of the self-signed certificate,
 ```
 openssl x509 -noout -text < my_cert.pem
 ```
-![Alt text](ssl.png)
+![Alt text](https://github.com/amin1374/Bootcamp-Documents/blob/master/Task7/pictures/ssl.png)
