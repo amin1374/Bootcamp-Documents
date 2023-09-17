@@ -18,7 +18,7 @@ Iptables filters packets based on:
 `Targets`: A target is a decision of what to do with a packet. Typically, this is to accept it, drop it, or reject it (which sends an error back to the sender).
 
 
-![Alt text](iptables.jpg)
+![Alt text](https://github.com/amin1374/Bootcamp-Documents/blob/master/Task7/pictures/iptables.jpg)
 
 ## Tables and Chains
 Linux firewall iptables has four default tables. We will list all four along with the chains each table contains.
